@@ -12,11 +12,131 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ext {
+    revConductor = '3.11.1'
+    revActivation = '2.0.0'
+    revAmqpClient = '5.13.0'
+    revAwaitility = '3.1.6'
+    revAwsSdk = '1.11.86'
+    revAzureStorageBlobSdk = '12.7.0'
+    revBval = '2.0.5'
+    revCommonsIo = '2.7'
+    revCuratorRecipes = '2.4.0'
+    revCuratorTest = '2.4.0'
+    revElasticSearch7 = '7.6.2'
+    revEmbeddedRedis = '0.6'
+    revEurekaClient = '1.10.10'
+    revGrpc = '1.33.+'
+    revGuava = '30.0-jre'
+    revGuavaRetrying = '2.0.0'
+    revHamcrestAllMatchers = '1.8'
+    revHealth = '1.1.+'
+    revJAXB = '2.3.3'
+    revJedis = '3.3.0'
+    revJersey = '1.19.4'
+    revJsonPath = '2.4.0'
+    revJq = '0.0.13'
+    revJsr311Api = '1.1.1'
+    revKafka = '2.6.0'
+    revMicrometer = '1.6.2'
+    revMockServerClient = '5.12.0'
+    revStan = '2.2.3'
+    revNatsStreaming = '2.6.5'
+    revNats = '2.15.6'
+    revOpenapi = '1.6.+'
+    revPowerMock = '2.0.9'
+    revPrometheus = '0.9.0'
+    revProtoBuf = '3.13.0'
+    revProtogenAnnotations = '1.0.0'
+    revProtogenCodegen = '1.4.0'
+    revRarefiedRedis = '0.0.17'
+    revRedisson = '3.13.3'
+    revRxJava = '1.2.2'
+    revSpectator = '0.122.0'
+    revGroovy = '3.0.9'
+    revSpock = '2.1-groovy-3.0'
+    revSpotifyCompletableFutures = '0.3.3'
+    revTestContainer = '1.17.2'
+    revDynoQueues = '2.0.20'
+    revLog4J= '2.17.1!!'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+configurations.all {
+    exclude group: 'ch.qos.logback', module: 'logback-classic'
+    exclude group: 'ch.qos.logback', module: 'logback-core'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+dependencies {
+
+
+
+    implementation "com.netflix.conductor:conductor-rest:${revConductor}"
+    implementation "com.netflix.conductor:conductor-core:${revConductor}"
+    implementation "com.netflix.conductor:conductor-redis-persistence:${revConductor}"
+    implementation "com.netflix.conductor:conductor-cassandra-persistence:${revConductor}"
+    implementation "com.netflix.conductor:conductor-es6-persistence:${revConductor}"
+    implementation "com.netflix.conductor:conductor-grpc-server:${revConductor}"
+    implementation "com.netflix.conductor:conductor-redis-lock:${revConductor}"
+    implementation "com.netflix.conductor:conductor-redis-concurrency-limit:${revConductor}"
+
+
+    implementation "com.netflix.conductor:conductor-http-task:${revConductor}"
+    implementation "com.netflix.conductor:conductor-json-jq-task:${revConductor}"
+    implementation "com.netflix.conductor:conductor-awss3-storage:${revConductor}"
+    implementation "com.netflix.conductor:conductor-awssqs-event-queue:${revConductor}"
+
+//    implementation project(':event-queue:conductor-amqp')
+//    implementation project(':event-queue:conductor-nats')
+//
+//    implementation project(':external-payload-storage:conductor-azureblob-storage')
+//    implementation project(':external-payload-storage:conductor-postgres-external-storage')
+//
+//    implementation project(':lock:conductor-zookeeper-lock')
+//
+//    implementation project(':conductor-metrics')
+//
+//    implementation project(':persistence:conductor-common-persistence')
+//    implementation project(':persistence:conductor-postgres-persistence')
+//    implementation project(':persistence:conductor-mysql-persistence')
+//
+//    implementation project(':task:conductor-kafka')
+//
+//    implementation project(':conductor-workflow-event-listener')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.retry:spring-retry'
+
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.apache.logging.log4j:log4j-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation "org.springdoc:springdoc-openapi-ui:${revOpenapi}"
+
+    runtimeOnly "org.glassfish.jaxb:jaxb-runtime:${revJAXB}"
+
+//    testImplementation "com.netflix.conductor:conductor-rest:${revConductor}"
+//    testImplementation "com.netflix.conductor:conductor-common:${revConductor}"
+//    testImplementation "io.grpc:grpc-testing:${revGrpc}"
+//    testImplementation "com.google.protobuf:protobuf-java:${revProtoBuf}"
+//    testImplementation "io.grpc:grpc-protobuf:${revGrpc}"
+//    testImplementation "io.grpc:grpc-stub:${revGrpc}"
+}
+
+
+jar {
+    enabled = true
+}
+
+bootJar {
+    mainClass = 'com.netflix.conductor.Conductor'
+    classifier = 'boot'
+}
+
+springBoot {
+    buildInfo()
 }
