@@ -81,6 +81,10 @@ dependencies {
     implementation "com.netflix.conductor:conductor-redis-lock:${revConductor}"
     implementation "com.netflix.conductor:conductor-redis-concurrency-limit:${revConductor}"
 
+    // https://mvnrepository.com/artifact/com.netflix.conductor/conductor-postgres-persistence
+    runtimeOnly "com.netflix.conductor:conductor-postgres-persistence:${revConductor}"
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation 'org.postgresql:postgresql:42.5.0'
 
     implementation "com.netflix.conductor:conductor-http-task:${revConductor}"
     implementation "com.netflix.conductor:conductor-json-jq-task:${revConductor}"
